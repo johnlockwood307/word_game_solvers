@@ -29,3 +29,7 @@ class Letter_boxed_search:
         
         if '>' in cur_node.children:
             self.found_words.append(trie_utils.reconstruct(cur_node))
+    
+
+    def get_found_words(self) -> list[str]:
+        return self.found_words

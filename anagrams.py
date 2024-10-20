@@ -1,7 +1,7 @@
 import sys
 from node import Node
 import trie_utils
-from lb_search import Letter_boxed_search
+from a_search import Anagrams_search
 
 import english_dictionary
 import english_words
@@ -18,70 +18,46 @@ match using_dict:
         eng_dict = None
 
 
-s1 = "abc"
-s2 = "def"
-s3 = "ghi"
-s4 = "jkl"
+letters = "abcdef"
 
 # Read letters from command line arguments
 if len(sys.argv) == 1:
     print("Using default letters")
 elif len(sys.argv) == 2:
     letters = sys.argv[1]
-    if len(letters) != 12:
-        print("Supply 12 letters. Usage:\n\tpy letter_boxed.py letters")
+    if len(letters) not in (6, 7):
+        print("Supply 6 or 7 letters. Usage:\n\tpy anagrams.py letters")
         exit(0)
     
-    print("Reading twelve letters")
-    s1 = letters[0:3]
-    s2 = letters[3:6]
-    s3 = letters[6:9]
-    s4 = letters[9:12]
-elif len(sys.argv) == 5:
-    s1 = sys.argv[1]
-    s2 = sys.argv[2]
-    s3 = sys.argv[3]
-    s4 = sys.argv[4]
-    
-    for side in s1, s2, s3, s4:
-        if len(side) != 3:
-            print("Supply four sides of 3 letters each. Usage:\n\tpy letter_boxed.py s1 s2 s3 s4")
-            exit(0)
-    
-    print("Reading four sides of three letters")
+    print(f"Reading {len(letters)} letters")
 else:
-    print("Usage:\n\tpy letter_boxed.py\n\tpy letter_boxed.py letters\n\tpy letter_boxed.py side1 side2 side3 side4")
+    print("Usage:\n\tpy anagrams.py letters")
     exit(0)
 
 
 allowed_chars = "abcdefghijklmnopqrstuvwxyz"
 has_illegal_chars = False
-s1 = s1.lower()
-s2 = s2.lower()
-s3 = s3.lower()
-s4 = s4.lower()
-for side in s1, s2, s3, s4:
-    for ltr in side:
-        if ltr not in allowed_chars:
-            has_illegal_chars = True
-            print(f"Illegal char {ltr}")
+letters = letters.lower()
+for ltr in letters:
+    if ltr not in allowed_chars:
+        has_illegal_chars = True
+        print(f"Illegal char {ltr}")
 
 if has_illegal_chars:
     exit(0)
 
-print(f"Using {s1} {s2} {s3} {s4}")
+print(f"Using {letters}")
 
 
 
-# filtered_words is a set of unique English words at least 3 letters long
+# filtered_words is a set of unique English words 3 to 6/7 letters long
 filtered_words = set()
 
 for word in eng_dict:
     word = word.lower()
-    if len(word) >= 3:
+    if len(word) >= 3 and len(word) <= len(letters):
         if word not in filtered_words:
             filtered_words.add(word)
-
 
 
 
@@ -92,7 +68,7 @@ trie = trie_utils.build_trie(filtered_words)
 
 print("Searching for valid words...")
 # search to find all valid words in the puzzle
-search = Letter_boxed_search(trie, s1, s2, s3, s4)
+search = Anagrams_search(trie, [ltr for ltr in letters])
 
 # sort found words by decreasing length and write to file
 found_words = sorted(search.get_found_words(), key=lambda wrd: -len(wrd))
