@@ -1,5 +1,6 @@
 from node import Node
 import trie_utils
+from copy import deepcopy
 
 class Word_hunt_search:
     def __init__(self, trie: Node, letter_grid: list[list[str]]):
@@ -24,7 +25,7 @@ class Word_hunt_search:
     # returns a copy of the covered_matrix with the given row/col coordinate set to True
     def get_updated_covered_matrix(self, covered_matrix: list[list[bool]], 
                                    r: int, c: int) -> list[list[bool]]:
-        result = covered_matrix.copy()
+        result = deepcopy(covered_matrix)
         result[r][c] = True
         return result
 
@@ -36,17 +37,15 @@ class Word_hunt_search:
     def search(self, cur_node, cur_row, cur_col, covered_matrix):
         for row in range(cur_row - 1, cur_row + 2):
             for col in range(cur_col - 1, cur_col + 2):
-                # don't search same cell
                 # don't search if out of range
                 # don't search if already covered (visited)
-                if (row != cur_row or col != cur_col)\
-                      and (self.is_in_range(row, col))\
-                        and not covered_matrix[row][col]:
+                if (self.is_in_range(row, col))\
+                      and not covered_matrix[row][col]:
                     # continue search if it can form valid word in trie
                     ltr = self.letter_grid[row][col]
                     if ltr in cur_node.children:
-                        updated_matrix = self.get_updated_covered_matrix(covered_matrix, row, col)
-                        self.search(cur_node.children[ltr], row, col, updated_matrix)
+                        self.search(cur_node.children[ltr], row, col, \
+                                    self.get_updated_covered_matrix(covered_matrix, row, col))
                     
                     # add to found words
                     if '>' in cur_node.children:
@@ -55,3 +54,18 @@ class Word_hunt_search:
 
     def get_found_words(self) -> list[str]:
         return list(self.found_words)
+    
+
+
+    def print_matrix(self, covered_matrix):
+        result_str = ""
+
+        for row in covered_matrix:
+            for bool in row:
+                if bool:
+                    result_str += '1'
+                else:
+                    result_str += '0'
+            result_str += '\n'
+        
+        print(result_str)
