@@ -7,24 +7,43 @@ from wh_search import Word_hunt_search
 
 eng_dict = dictionary_manager.get_eng_dict()
 
+# filtered_words is a set of unique English words at least 3 letters long
+filtered_words = set()
+
+for word in eng_dict:
+    word = word.lower()
+    if len(word) >= 3:
+        if word not in filtered_words:
+            filtered_words.add(word)
+
+# construct trie from filtered_words
+# each word begins with '<' and ends with '>'
+print("Constructing trie...")
+trie = trie_utils.build_trie(filtered_words)
+
 
 letter_grid = [['a', 'b', 'c', 'd'], ['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l'], ['m', 'n', 'o', 'p']]
 
-# Read letters from command line arguments
+args = sys.argv
+
+# Read letters from command line
 if len(sys.argv) == 1:
-    print("Using default letters")
-elif len(sys.argv) == 2:
-    letters = sys.argv[1].lower()
+    letters = input("Enter arguments: ").split()
+    args = [__file__] + letters
+    # print(args)
+
+if len(args) == 2:
+    letters = args.lower()
     if len(letters) not in (16, 25):
         print("Supply 16 or 25 letters. Usage:\n\tpy anagrams.py letters")
         exit(0)
     
     print(f"Reading {len(letters)} letters")
-elif len(sys.argv) == 5:
-    r1 = sys.argv[1].lower()
-    r2 = sys.argv[2].lower()
-    r3 = sys.argv[3].lower()
-    r4 = sys.argv[4].lower()
+elif len(args) == 5:
+    r1 = args[1].lower()
+    r2 = args[2].lower()
+    r3 = args[3].lower()
+    r4 = args[4].lower()
     letter_grid = [[ltr for ltr in row] for row in [r1, r2, r3, r4]]
 
     for row in letter_grid:
@@ -33,12 +52,12 @@ elif len(sys.argv) == 5:
             exit(0)
     
     print("Reading four sides of four letters")
-elif len(sys.argv) == 6:
-    r1 = sys.argv[1].lower()
-    r2 = sys.argv[2].lower()
-    r3 = sys.argv[3].lower()
-    r4 = sys.argv[4].lower()
-    r5 = sys.argv[5].lower()
+elif len(args) == 6:
+    r1 = args[1].lower()
+    r2 = args[2].lower()
+    r3 = args[3].lower()
+    r4 = args[4].lower()
+    r5 = args[5].lower()
     letter_grid = [[ltr for ltr in row] for row in [r1, r2, r3, r4, r5]]
 
     for row in letter_grid:
@@ -70,21 +89,6 @@ print(f"Using {letter_grid}")
 
 
 
-# filtered_words is a set of unique English words at least 3 letters long
-filtered_words = set()
-
-for word in eng_dict:
-    word = word.lower()
-    if len(word) >= 3:
-        if word not in filtered_words:
-            filtered_words.add(word)
-
-
-
-# construct trie from filtered_words
-# each word begins with '<' and ends with '>'
-print("Constructing trie...")
-trie = trie_utils.build_trie(filtered_words)
 
 print("Searching for valid words...")
 # search to find all valid words in the puzzle
