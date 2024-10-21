@@ -1,21 +1,11 @@
 import sys
 from node import Node
 import trie_utils
+import dictionary_manager
 from lb_search import Letter_boxed_search
 
-import english_dictionary
-import english_words
 
-# options: ["english_dictionary", "english-words"]
-using_dict = "english-words"
-
-match using_dict:
-    case "english_dictionary":
-        eng_dict = english_dictionary.scripts.read_pickle.get_dict()
-    case "english-words":
-        eng_dict = english_words.get_english_words_set(['web2'], lower=True)
-    case _:
-        eng_dict = None
+eng_dict = dictionary_manager.get_eng_dict()
 
 
 s1 = "abc"

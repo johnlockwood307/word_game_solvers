@@ -1,21 +1,11 @@
 import sys
 from node import Node
 import trie_utils
+import dictionary_manager
 from a_search import Anagrams_search
 
-import english_dictionary
-import english_words
 
-# options: ["english_dictionary", "english-words"]
-using_dict = "english-words"
-
-match using_dict:
-    case "english_dictionary":
-        eng_dict = english_dictionary.scripts.read_pickle.get_dict()
-    case "english-words":
-        eng_dict = english_words.get_english_words_set(['web2'], lower=True)
-    case _:
-        eng_dict = None
+eng_dict = dictionary_manager.get_eng_dict()
 
 
 letters = "abcdef"
@@ -31,7 +21,7 @@ elif len(sys.argv) == 2:
     
     print(f"Reading {len(letters)} letters")
 else:
-    print("Usage:\n\tpy anagrams.py letters")
+    print("Usage:\n\tpy anagrams.py\n\tpy anagrams.py letters")
     exit(0)
 
 
