@@ -1,5 +1,4 @@
 import sys
-from node import Node
 import trie_utils
 import dictionary_manager
 from lb_search import Letter_boxed_search

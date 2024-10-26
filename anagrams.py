@@ -1,5 +1,4 @@
 import sys
-from node import Node
 import trie_utils
 import dictionary_manager
 from a_search import Anagrams_search

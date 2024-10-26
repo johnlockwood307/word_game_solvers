@@ -1,5 +1,4 @@
 import sys
-from node import Node
 import trie_utils
 import dictionary_manager
 from wh_search import Word_hunt_search
@@ -33,7 +32,7 @@ if len(sys.argv) == 1:
     # print(args)
 
 if len(args) == 2:
-    letters = args.lower()
+    letters = args[1].lower()
     if len(letters) not in (16, 25):
         print("Supply 16 or 25 letters. Usage:\n\tpy anagrams.py letters")
         exit(0)
