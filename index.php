@@ -1,7 +1,9 @@
-<!DOCTYPE html>
 <html>
     <head>
-        <title>TITLE</title> 
+        <title>TITLE</title>
+        <?php
+            echo shell_exec("python word_hunt.py \"abcd efgh qwer tyui\"");
+        ?>
     </head>
 
     <body>
