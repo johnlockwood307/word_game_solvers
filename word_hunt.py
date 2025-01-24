@@ -96,7 +96,14 @@ search = Word_hunt_search(trie, letter_grid)
 # sort found words by decreasing length and write to file
 found_words = sorted(search.get_found_words(), key=lambda wrd: -len(wrd))
 print(f"Found {len(found_words)} words")
-
 with open("found_words.txt", "w") as words_file:
     for word in found_words:
         words_file.write(word + "\n")
+
+
+# do same for word path objects
+found_word_paths = sorted(search.get_found_word_paths(), key=lambda wrd_path: -len(wrd_path.word))
+print(f"Found {len(found_word_paths)} word paths")
+with open("found_word_paths.txt", "w") as word_paths_file:
+    for word_path in found_word_paths:
+        word_paths_file.write(str(word_path) + "\n")
