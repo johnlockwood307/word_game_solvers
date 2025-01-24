@@ -18,7 +18,7 @@ class Word_hunt_search:
                 covered_matrix[r][c] = True
 
                 # initiate search starting at this cell if it is a valid letter (not .)
-                if self.letter_grid[r][c] in trie.children:
+                if self.letter_grid[r][c] in trie.children:                    
                     self.search(trie.children[start_ltr], r, c, covered_matrix)
 
 
@@ -41,15 +41,16 @@ class Word_hunt_search:
                 # don't search if already covered (visited)
                 if (self.is_in_range(row, col))\
                       and not covered_matrix[row][col]:
+
                     # continue search if it can form valid word in trie
                     ltr = self.letter_grid[row][col]
                     if ltr in cur_node.children:
                         self.search(cur_node.children[ltr], row, col, \
                                     self.get_updated_covered_matrix(covered_matrix, row, col))
                     
-                    # add to found words
-                    if '>' in cur_node.children:
-                        self.found_words.add(trie_utils.reconstruct(cur_node))
+        # add to found words
+        if '>' in cur_node.children:
+            self.found_words.add(trie_utils.reconstruct(cur_node))
 
 
     def get_found_words(self) -> list[str]:
