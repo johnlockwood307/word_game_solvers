@@ -4,3 +4,12 @@
     grid-template-rows: repeat(3, 10px);
     gap: 10px;
 }
+
+.scroll-container {
+    width: 300px;
+    height: 500px;
+    overflow-y: scroll;
+    border: 1px solid #222;
+    padding: 8px;
+    font-size: x-large;
+}
