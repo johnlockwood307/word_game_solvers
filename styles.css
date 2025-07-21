@@ -1,0 +1,6 @@
+.lettergrid {
+    display: grid;
+    grid-template-columns: repeat(3, 10px);
+    grid-template-rows: repeat(3, 10px);
+    gap: 10px;
+}
