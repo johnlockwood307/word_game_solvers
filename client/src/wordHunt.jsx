@@ -1,3 +1,3 @@
-export default function WordHuntPane() {
+export default function WordHuntPane({ trie }) {
     return <div>Word Hunt!</div>
 }

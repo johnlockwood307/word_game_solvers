@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { buildTrie } from './trie'
+import ButtonPane from './topButtonPane'
 import AnagramsPane from './anagrams'
 import WordHuntPane from './wordHunt'
 
@@ -27,28 +28,14 @@ function App() {
     return (
         <div>
             {/* Top button pane */}
-            <div>
-                {panes.map(pane => (
-                    <button
-                        key={pane}
-                        onClick={() => setCurPane(pane)}
-                        style={{
-                            backgroundColor: 'lightgray',
-                            color: 'black',
-                            border: (curPane == pane ? '4px solid green' : 'none')
-                        }}
-                    >
-                        {pane}
-                    </button>
-                ))}
-            </div>
+            <ButtonPane panes={panes} curPane={curPane} setCurPane={setCurPane}/>
 
             {/* Panes for each solver. Conditionally displayed only when that pane is active. */}
             <div style={{ display: (curPane === 'Anagrams') ? 'block' : 'none'}}>
-                <AnagramsPane />
+                <AnagramsPane trie={trie}/>
             </div>
             <div style={{ display: (curPane === 'Word Hunt') ? 'block' : 'none'}}>
-                <WordHuntPane />
+                <WordHuntPane trie={trie}/>
             </div>
         </div>
     )
