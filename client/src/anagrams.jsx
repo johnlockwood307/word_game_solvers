@@ -3,12 +3,11 @@ import { reconstructWord } from "./trie";
 
 /**
  * Checks the validity of the inputted letters.
- * @returns whether the input letters are alphabetic and there are 6 or 7 of them.
+ * @returns whether the input letters are alphabetic and there are at least 6 of them.
  */
 function lettersValid(letters) {
     let regex = /^[a-z]+$/;
-    let len = letters.length;
-    return regex.test(letters) && (len == 6 || len == 7);
+    return regex.test(letters) && letters.length >= 6;
 }
 
 /**
@@ -55,6 +54,7 @@ function strSubtract(string, ltr) {
     }
 }
 
+
 export default function AnagramsPane({ trie }) {
     const [letters, setLetters] = useState('')
     const [foundWords, setFoundWords] = useState([])
@@ -78,7 +78,7 @@ export default function AnagramsPane({ trie }) {
     
     return <div>
         <h1>Anagrams</h1>
-        <label>Input 6 to 7 alphabetic letters:</label>
+        <label>Input 6 or more alphabetic letters:</label>
         <input
             type='text'
             value={letters}
