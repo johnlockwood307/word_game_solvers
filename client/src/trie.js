@@ -37,5 +37,17 @@ export function buildTrie(wordArr) {
     return trie
 }
 
+/**
+ * Given the node of the last letter in a word, reconstructs and returns the word.
+ */
+export function reconstructWord(endNode) {
+    let curNode = endNode
+    let word = ''
+    
+    while (curNode.letter != '<') {
+        word = curNode.letter + word
+        curNode = curNode.parent
+    }
 
-// reconstructWord() {}
+    return word
+}
